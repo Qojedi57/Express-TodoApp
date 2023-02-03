@@ -17,16 +17,69 @@ describe("Just testing the server", function () {
           }
         });
     });
+
+    it("Should be testing to get a specific todo", function (done) {
+      request(server)
+        .get("/todo/LN8t?admin=true")
+        .expect(200)
+        .end(function (err, response) {
+          if (err) {
+            throw err;
+          } else {
+            expect(response.body).toHaveProperty("success");
+            expect(response.body).toHaveProperty("todo");
+            expect(response.body.todo).toHaveProperty("id", "LN8t");
+            done();
+          }
+        });
+    });
+
     it("Should be able to create a new todo", function (done) {
       request(server)
-        .post("/todo?admin=true").send({
-            todo:"Clean the garage"
-        }).set('Accept', 'application/json').expect(200).end(function(err,response){
-        if (err) {
+        .post("/todo?admin=true")
+        .send({
+          todo: "Clean the garage",
+        })
+        .set("Accept", "application/json")
+        .expect(200)
+        .end(function (err, response) {
+          if (err) {
             throw err;
           } else {
             console.log(response);
-            expect(response.body).toEqual({ success:true});
+            expect(response.body).toEqual({ success: true });
+            done();
+          }
+        });
+    });
+
+    it("Should be testing to make sure the todo is updated ", function (done) {
+      request(server)
+        .put("/todo/LN8t?admin=true")
+        .send({
+          todo: "Wash the dishes",
+        })
+        .set("Accept", "application/json")
+        .expect(200)
+        .end(function (err, response) {
+          if (err) {
+            throw err;
+          } else {
+            expect(response.body).toEqual({ success: true });
+            done();
+          }
+        });
+    });
+
+    it("This test should be testing to delete one specific todo", function (done) {
+      request(server)
+        .delete("/todo/FJpK?admin=true")
+        .expect(200)
+        .end(function (err, response) {
+          if (err) {
+            throw err;
+          } else {
+            expect(response.body).toEqual({ success: true });
             done();
           }
         });
