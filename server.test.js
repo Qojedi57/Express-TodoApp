@@ -20,7 +20,7 @@ describe("Just testing the server", function () {
 
     it("Should be testing to get a specific todo", function (done) {
       request(server)
-        .get("/todo/LN8t?admin=true")
+        .get("/todo/fWI9?admin=true")
         .expect(200)
         .end(function (err, response) {
           if (err) {
@@ -28,7 +28,7 @@ describe("Just testing the server", function () {
           } else {
             expect(response.body).toHaveProperty("success");
             expect(response.body).toHaveProperty("todo");
-            expect(response.body.todo).toHaveProperty("id", "LN8t");
+            expect(response.body.todo).toHaveProperty("id", "fWI9");
             done();
           }
         });
@@ -55,7 +55,7 @@ describe("Just testing the server", function () {
 
     it("Should be testing to make sure the todo is updated ", function (done) {
       request(server)
-        .put("/todo/LN8t?admin=true")
+        .put("/todo/fWI9?admin=true")
         .send({
           todo: "Wash the dishes",
         })
